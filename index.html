@@ -1,99 +1,831 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AnyChat Widget Local Test</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 40px;
-      background: #f5f7fb;
-      color: #1f2937;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #ffffff;
-      padding: 32px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-    }
+    <title>AnyChat Live Widget Test</title>
 
-    h1 {
-      margin-top: 0;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    .status {
-      margin-top: 20px;
-      padding: 16px;
-      background: #eef6ff;
-      border: 1px solid #cfe4ff;
-      border-radius: 8px;
-    }
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fb;
+            color: #1d2939;
+        }
 
-    code {
-      background: #f3f4f6;
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-  </style>
+        header {
+            background: #ffffff;
+            padding: 18px 7%;
+            border-bottom: 1px solid #e4e7ec;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #155eef;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #344054;
+            margin-left: 25px;
+        }
+
+        .hero {
+            padding: 80px 7%;
+            min-height: 500px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff4ff,
+                    #ffffff
+                );
+        }
+
+        .hero-content {
+            max-width: 650px;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            line-height: 1.7;
+            color: #667085;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+
+            background: #155eef;
+            color: white;
+
+            padding: 14px 24px;
+
+            border-radius: 8px;
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        section {
+            padding: 70px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+
+            border-radius: 12px;
+
+            border: 1px solid #eaecf0;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0, 0, 0, 0.04);
+        }
+
+        .debug-container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .debug-box {
+            background: #101828;
+            color: #d0d5dd;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+            font-family:
+                Consolas,
+                Monaco,
+                monospace;
+
+            font-size: 13px;
+
+            white-space: pre-wrap;
+
+            max-height: 400px;
+
+            overflow: auto;
+        }
+
+        .success {
+            color: #12b76a;
+        }
+
+        .warning {
+            color: #fdb022;
+        }
+
+        footer {
+            background: white;
+
+            border-top:
+                1px solid #eaecf0;
+
+            padding: 25px;
+
+            text-align: center;
+
+            color: #667085;
+        }
+
+        @media(max-width: 800px) {
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
-  <div class="container">
-    <h1>AnyChat Widget Test Page</h1>
 
-    <p>
-      This page is being used to test the AnyChat widget locally.
-      If the widget loads correctly, you should see the chat/contact widget
-      appear on the page, usually near one of the screen corners.
-    </p>
 
-    <div class="status">
-      <strong>Widget script loaded:</strong>
-      <span id="widget-status">Checking...</span>
+<header>
+
+    <div class="logo">
+        AnyChat Demo
     </div>
 
-    <p style="margin-top: 24px;">
-      Current page URL:
-      <code id="current-url"></code>
-    </p>
-  </div>
+    <nav>
 
-  <script>
-    document.getElementById('current-url').textContent = window.location.href;
-  </script>
+        <a href="#home">
+            Home
+        </a>
 
-  <!-- AnyChat Widget -->
-  <script>
-    (function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
+        <a href="#services">
+            Services
+        </a>
 
-      if (d.getElementById(id)) return;
+        <a href="#debug">
+            Debug
+        </a>
 
-      js = d.createElement(s);
-      js.id = id;
+    </nav>
 
-      js.src =
-        'https://api.anychat.one/widget/c6f4894c-7ce8-32b2-b73f-c47b686fba58?r=' +
-        encodeURIComponent(window.location);
+</header>
 
-      js.onload = function() {
-        document.getElementById('widget-status').textContent =
-          'Yes - AnyChat JavaScript loaded successfully.';
-      };
 
-      js.onerror = function() {
-        document.getElementById('widget-status').textContent =
-          'Failed to load. Check browser Console / Network tab.';
-      };
+<section
+    class="hero"
+    id="home"
+>
 
-      fjs.parentNode.insertBefore(js, fjs);
+    <div class="hero-content">
 
-    }(document, 'script', 'contactus-jssdk'));
-  </script>
+        <h1>
+            AnyChat Live Chat Test
+        </h1>
+
+        <p>
+            This is a test website hosted on
+            GitHub Pages for checking the
+            AnyChat live-chat widget.
+        </p>
+
+        <p>
+            If the widget initializes correctly,
+            you should see the AnyChat button
+            somewhere around the bottom-right
+            or bottom-left corner.
+        </p>
+
+        <a
+            class="button"
+            href="#debug"
+        >
+            Check Widget Status
+        </a>
+
+    </div>
+
+</section>
+
+
+<section id="services">
+
+    <div class="section-title">
+
+        <h2>
+            Test Website
+        </h2>
+
+        <p>
+            Normal website content for testing
+            the live chat integration.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+
+        <div class="card">
+
+            <h3>
+                Voice Support
+            </h3>
+
+            <p>
+                Customer voice communication
+                and contact-center integration.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Live Chat
+            </h3>
+
+            <p>
+                Website visitors can communicate
+                with agents through live chat.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h3>
+                Omnichannel
+            </h3>
+
+            <p>
+                Combine voice, chat and messaging
+                into one customer experience.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<section id="debug">
+
+    <div class="debug-container">
+
+        <div class="section-title">
+
+            <h2>
+                AnyChat Debug Information
+            </h2>
+
+            <p>
+                This section shows what happens
+                when the AnyChat widget loads.
+            </p>
+
+        </div>
+
+        <div
+            id="debugOutput"
+            class="debug-box"
+        >
+            Initializing debug...
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<footer>
+
+    AnyChat Widget Integration Test
+
+</footer>
+
+
+
+<!-- ======================================== -->
+<!-- DEBUG SCRIPT -->
+<!-- ======================================== -->
+
+<script>
+
+const debugOutput =
+    document.getElementById(
+        "debugOutput"
+    );
+
+
+function log(message) {
+
+    const time =
+        new Date()
+        .toLocaleTimeString();
+
+    debugOutput.innerHTML +=
+        "\n[" +
+        time +
+        "] " +
+        message;
+
+}
+
+
+/*
+Clear initial message
+*/
+
+debugOutput.innerHTML = "";
+
+
+/*
+Basic information
+*/
+
+log(
+    "Page loaded"
+);
+
+log(
+    "Current URL: " +
+    window.location.href
+);
+
+log(
+    "Hostname: " +
+    window.location.hostname
+);
+
+log(
+    "Protocol: " +
+    window.location.protocol
+);
+
+log(
+    "Origin: " +
+    window.location.origin
+);
+
+
+/*
+Global JavaScript errors
+*/
+
+window.addEventListener(
+    "error",
+    function(event) {
+
+        log(
+            "JAVASCRIPT ERROR: " +
+            event.message
+        );
+
+        if(event.filename) {
+
+            log(
+                "File: " +
+                event.filename
+            );
+
+        }
+
+    }
+);
+
+
+/*
+Promise errors
+*/
+
+window.addEventListener(
+    "unhandledrejection",
+    function(event) {
+
+        log(
+            "PROMISE ERROR: " +
+            event.reason
+        );
+
+    }
+);
+
+
+/*
+Monitor DOM changes.
+
+This helps us check whether
+AnyChat injects elements.
+*/
+
+const observer =
+    new MutationObserver(
+        function(mutations) {
+
+            mutations.forEach(
+                function(mutation) {
+
+                    mutation
+                    .addedNodes
+                    .forEach(
+                        function(node) {
+
+                            if(
+                                node.nodeType === 1
+                            ) {
+
+                                log(
+                                    "New DOM element: <" +
+                                    node.tagName +
+                                    ">"
+                                );
+
+                                if(node.id) {
+
+                                    log(
+                                        "Element ID: " +
+                                        node.id
+                                    );
+
+                                }
+
+                                if(node.className) {
+
+                                    log(
+                                        "Element class: " +
+                                        node.className
+                                    );
+
+                                }
+
+                            }
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+observer.observe(
+    document.body,
+    {
+        childList: true,
+        subtree: true
+    }
+);
+
+</script>
+
+
+
+<!-- ======================================== -->
+<!-- ANYCHAT WIDGET -->
+<!-- ======================================== -->
+
+<script>
+
+(function(
+    d,
+    s,
+    id
+){
+
+    var js,
+        fjs =
+        d.getElementsByTagName(s)[0];
+
+
+    /*
+    Prevent duplicate widget
+    */
+
+    if(
+        d.getElementById(id)
+    ) {
+
+        log(
+            "AnyChat script already exists."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    Create widget script
+    */
+
+    js =
+        d.createElement(s);
+
+
+    js.id =
+        id;
+
+
+    /*
+    YOUR ANYCHAT WIDGET URL
+    */
+
+    js.src =
+        "https://api.anychat.one/widget/" +
+        "c6f4894c-7ce8-32b2-b73f-c47b686fba58" +
+        "?r=" +
+        encodeURIComponent(
+            window.location.href
+        );
+
+
+    /*
+    Script successfully downloaded
+    */
+
+    js.onload =
+        function() {
+
+            log(
+                "SUCCESS: AnyChat JavaScript loaded."
+            );
+
+
+            /*
+            Wait for widget initialization
+            */
+
+            setTimeout(
+                checkWidget,
+                3000
+            );
+
+
+            setTimeout(
+                checkWidget,
+                7000
+            );
+
+        };
+
+
+    /*
+    Script failed
+    */
+
+    js.onerror =
+        function(event) {
+
+            log(
+                "ERROR: AnyChat JavaScript could not load."
+            );
+
+            console.error(
+                "AnyChat load error:",
+                event
+            );
+
+        };
+
+
+    /*
+    Add script to page
+    */
+
+    fjs.parentNode.insertBefore(
+        js,
+        fjs
+    );
+
+
+    log(
+        "AnyChat script added to page."
+    );
+
+
+})(
+    document,
+    "script",
+    "contactus-jssdk"
+);
+
+
+
+
+
+/*
+Widget checker
+*/
+
+function checkWidget() {
+
+    log(
+        "----- Widget Check -----"
+    );
+
+
+    /*
+    Check script
+    */
+
+    const script =
+        document.getElementById(
+            "contactus-jssdk"
+        );
+
+
+    if(script) {
+
+        log(
+            "Widget script exists."
+        );
+
+        log(
+            "Script URL: " +
+            script.src
+        );
+
+    } else {
+
+        log(
+            "Widget script NOT found."
+        );
+
+    }
+
+
+
+    /*
+    Check iframes
+    */
+
+    const iframes =
+        document.querySelectorAll(
+            "iframe"
+        );
+
+
+    log(
+        "Iframe count: " +
+        iframes.length
+    );
+
+
+    iframes.forEach(
+        function(frame,index) {
+
+            log(
+                "Iframe " +
+                (index + 1) +
+                ": " +
+                frame.src
+            );
+
+        }
+    );
+
+
+
+    /*
+    Check fixed elements.
+
+    Most chat widgets use
+    position: fixed.
+    */
+
+    const elements =
+        document.querySelectorAll(
+            "body *"
+        );
+
+
+    let fixedElements = 0;
+
+
+    elements.forEach(
+        function(element) {
+
+            const style =
+                window.getComputedStyle(
+                    element
+                );
+
+
+            if(
+                style.position ===
+                "fixed"
+            ) {
+
+                fixedElements++;
+
+                log(
+                    "Fixed element found: " +
+                    element.tagName +
+                    " #" +
+                    element.id +
+                    " ." +
+                    element.className
+                );
+
+            }
+
+        }
+    );
+
+
+    log(
+        "Fixed elements: " +
+        fixedElements
+    );
+
+
+
+    /*
+    Search for AnyChat related nodes
+    */
+
+    const anychatElements =
+        document.querySelectorAll(
+            '[id*="anychat"],' +
+            '[class*="anychat"],' +
+            '[id*="contactus"],' +
+            '[class*="contactus"],' +
+            '[id*="chat"],' +
+            '[class*="chat"]'
+        );
+
+
+    log(
+        "Possible chat elements: " +
+        anychatElements.length
+    );
+
+
+    anychatElements.forEach(
+        function(element) {
+
+            log(
+                "Possible widget element: " +
+                element.tagName +
+                " | ID: " +
+                element.id +
+                " | Class: " +
+                element.className
+            );
+
+        }
+    );
+
+
+    log(
+        "----- End Check -----"
+    );
+
+}
+
+</script>
+
+
 </body>
 </html>
